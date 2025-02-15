@@ -23,12 +23,23 @@ function Home() {
     }, [search]);
 
     return (
-        <div>
-            <input type="text" placeholder="Buscar restaurantes" onChange={(e) => setSearch(e.target.value)} />
-            <ul>
+        <div className="home-container">
+            <input
+                type="text"
+                placeholder="Buscar restaurantes"
+                onChange={(e) => setSearch(e.target.value)}
+                className="search-input"
+            />
+            <ul className="restaurant-list">
                 {restaurants.map((restaurant) => (
-                    <li key={restaurant._id} onClick={() => navigate(`/restaurant/${restaurant._id}`)}>
-                        {restaurant.name} - {restaurant.address}
+                    <li
+                        key={restaurant._id}
+                        onClick={() => navigate(`/restaurant/${restaurant._id}`)}
+                        className="restaurant-item"
+                    >
+                        <h3>{restaurant.name}</h3>
+                        <p className="address">{restaurant.address}</p>
+                        <p>{restaurant.phone}</p>
                     </li>
                 ))}
             </ul>

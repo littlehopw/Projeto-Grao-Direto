@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 
 interface MenuItem {
@@ -17,20 +17,36 @@ interface Restaurant {
 
 function RestaurantDetails() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [restaurant, setRestaurant] = useState<Restaurant | null>(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchRestaurant = async () => {
-            const res = await api.get(`/restaurants/${id}`);
-            setRestaurant(res.data);
+            try {
+                console.log(`Fetching restaurant with ID: ${id}`);
+                const res = await api.get(`/restaurants/${id}`);
+                console.log('API response:', res.data);
+                setRestaurant(res.data);
+            } catch (err) {
+                console.error('Error fetching restaurant:', err);
+                setError("Erro ao carregar os dados do restaurante.");
+            } finally {
+                setLoading(false);
+            }
         };
         fetchRestaurant();
     }, [id]);
 
-    if (!restaurant) return <p>Carregando...</p>;
+    if (loading) return <p>Carregando...</p>;
+    if (error) return <p>{error}</p>;
+
+    if (!restaurant) return <p>Restaurante não encontrado.</p>;
 
     return (
-        <div>
+        <div className="restaurant-details-container">
+            <button onClick={() => navigate(-1)} className="back-button">Voltar</button>
             <h1>{restaurant.name}</h1>
             <p>{restaurant.phone}</p>
             <p>{restaurant.address}</p>

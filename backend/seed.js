@@ -26,6 +26,15 @@ const seedData = async () => {
                 { name: "Feijoada", description: "Feijão preto, carne seca, linguiça", price: 35.00 },
                 { name: "Frango Grelhado", description: "Frango com legumes", price: 28.00 }
             ]
+        },
+        {
+            name: "Sabores do Campo",
+            phone: "1122-3344",
+            address: "Rua Verde, 789",
+            menu: [
+                { name: "Salada Caesar", description: "Alface, frango, croutons e molho Caesar", price: 20.00 },
+                { name: "Bife à Parmegiana", description: "Bife, queijo e molho de tomate", price: 32.00 }
+            ]
         }
     ]);
 
